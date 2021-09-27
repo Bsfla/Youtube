@@ -26,6 +26,7 @@ const VideoUploadComponent = (props) => {
   const [videoCategory, setVideoCategory] = useState("Film & Animation");
   const [thumbnail, setThumnail] = useState("");
   const [fileduration, setFileduration] = useState("");
+  const [filePath, setFilePath] = useState("");
 
   //input에 입력하기 위해 change 함수를 꼭 만들어줘야됨
   const onTitleChange = (e) => {
@@ -60,7 +61,9 @@ const VideoUploadComponent = (props) => {
           fileName: response.data.fileName,
         };
 
-        axios.post("api/video/thumbnail", variable).then((response) => {
+        setFilePath(response.data.url);
+
+        axios.post("/api/video/thumbnail", variable).then((response) => {
           if (response.data.success) {
             console.log(response.data.thumbsFilePath);
             setThumnail(response.data.thumbsFilePath);
@@ -82,7 +85,8 @@ const VideoUploadComponent = (props) => {
       private: videoPrivate,
       category: videoCategory,
       thumbnail: thumbnail,
-      fileduration: fileduration,
+      duration: fileduration,
+      filePath: filePath,
     };
 
     axios.post("/api/video/uploadVideo", variable).then((response) => {

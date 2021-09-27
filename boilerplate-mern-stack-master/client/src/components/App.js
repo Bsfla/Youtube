@@ -8,6 +8,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 import VideoUploadPage from "./views/VideoUploadPage/VideoUploadPage";
+import VideoDetailComponent from "./views/VideoDetailPage/VideoDetailComponent";
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -24,8 +25,13 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route
             exact
-            path="/videoUpLoad"
+            path="/video/upLoad"
             component={Auth(VideoUploadPage, null)}
+          />
+          <Route
+            exact
+            path="/video/detail/:videoId"
+            component={Auth(VideoDetailComponent, null)}
           />
         </Switch>
       </div>
