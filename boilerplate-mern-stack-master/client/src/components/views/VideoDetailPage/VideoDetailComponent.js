@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, List, Avatar } from "antd";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import Comment from "./Section/Comment";
+
 const VideoDetailComponent = (props) => {
   const videoId = props.match.params.videoId;
-  const variable = {
-    videoId: videoId,
-  };
+
   const [videoDetail, setVideoDetail] = useState([]);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    console.log(variable);
+    const variable = {
+      videoId: videoId,
+    };
     axios.post("/api/video/getVideoDetail", variable).then((response) => {
       if (response.data.success) setVideoDetail(response.data.videoDetail);
       else alert("데이터를 불러오는데 실패했습니다");
@@ -38,6 +40,7 @@ const VideoDetailComponent = (props) => {
             </List.Item>
 
             {/* Comment */}
+            <Comment videoId={videoId} />
           </div>
         </Col>
       </Row>
