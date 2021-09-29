@@ -10,6 +10,10 @@ const VideoDetailComponent = (props) => {
   const [videoDetail, setVideoDetail] = useState([]);
   const [comments, setComments] = useState([]);
 
+  const refreshData = (newComment) => {
+    setComments(comments.concat(newComment));
+  };
+
   useEffect(() => {
     const variable = {
       videoId: videoId,
@@ -17,6 +21,11 @@ const VideoDetailComponent = (props) => {
     axios.post("/api/video/getVideoDetail", variable).then((response) => {
       if (response.data.success) setVideoDetail(response.data.videoDetail);
       else alert("데이터를 불러오는데 실패했습니다");
+    });
+
+    axios.post("/api/comment/getComments", variable).then((response) => {
+      console.log(response.data);
+      if (response.data.success) setComments(response.data.comments);
     });
   }, []);
 
@@ -40,7 +49,11 @@ const VideoDetailComponent = (props) => {
             </List.Item>
 
             {/* Comment */}
-            <Comment videoId={videoId} />
+            <Comment
+              videoId={videoId}
+              commentlist={comments}
+              refreshData={refreshData}
+            />
           </div>
         </Col>
       </Row>
